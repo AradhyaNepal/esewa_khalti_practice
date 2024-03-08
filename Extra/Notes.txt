@@ -1,6 +1,6 @@
 1) Get Payment Details and Keys
 
-
+Assumsion we are making is that every product belongs to diffrent merchat
 Request:
 {
  productId:1,	
@@ -10,10 +10,12 @@ Request:
 Response
 Esewa:
 clientId JB0BBQ4aD0UqIThFJwAKBgAXEUkEGQUBBAwdOgABHD4DChwUAB0R
-secretId BhwIWQQADhIYSxILExMcAgFXFhcOBwAKBgAXEQ==	
+clientSecret BhwIWQQADhIYSxILExMcAgFXFhcOBwAKBgAXEQ==	
 productId <-- Unique ID to track specific transaction. We have to generate this ourself.
 productName Product 1
 productPrice 500
+
+8gBm/:&EnhH.1/q
 
 Khalti
 test_public_key_d5d9f63743584dc38753056b0cc737d5
@@ -21,6 +23,9 @@ amount: 50000,
 productIdentity: 'dell-g5-g5510-2021',
 productName: 'Dell G5 G5510 2021',
 productUrl: 'https://www.khalti.com/#/bazaar',
+
+
+test_secret_key_f59e8b7d18b4499ca40f68195a846e9b
 
 
 

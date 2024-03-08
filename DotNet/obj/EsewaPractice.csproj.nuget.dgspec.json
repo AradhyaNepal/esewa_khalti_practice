@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\PracticingDotNet\\EsewaKhaltiPractice\\DotNet\\EsewaPractice\\EsewaPractice.csproj": {}
+    "D:\\PracticingDotNet\\EsewaKhaltiPractice\\DotNet\\EsewaPractice.csproj": {}
   },
   "projects": {
-    "D:\\PracticingDotNet\\EsewaKhaltiPractice\\DotNet\\EsewaPractice\\EsewaPractice.csproj": {
+    "D:\\PracticingDotNet\\EsewaKhaltiPractice\\DotNet\\EsewaPractice.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\PracticingDotNet\\EsewaKhaltiPractice\\DotNet\\EsewaPractice\\EsewaPractice.csproj",
+        "projectUniqueName": "D:\\PracticingDotNet\\EsewaKhaltiPractice\\DotNet\\EsewaPractice.csproj",
         "projectName": "EsewaPractice",
-        "projectPath": "D:\\PracticingDotNet\\EsewaKhaltiPractice\\DotNet\\EsewaPractice\\EsewaPractice.csproj",
+        "projectPath": "D:\\PracticingDotNet\\EsewaKhaltiPractice\\DotNet\\EsewaPractice.csproj",
         "packagesPath": "C:\\Users\\Aaradhya Gopal\\.nuget\\packages\\",
-        "outputPath": "D:\\PracticingDotNet\\EsewaKhaltiPractice\\DotNet\\EsewaPractice\\obj\\",
+        "outputPath": "D:\\PracticingDotNet\\EsewaKhaltiPractice\\DotNet\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Aaradhya Gopal\\AppData\\Roaming\\NuGet\\NuGet.Config",
