@@ -1,4 +1,4 @@
-namespace EsewaKhaltiPractice
+namespace EsewaPractice
 {
     public class WeatherForecast
     {

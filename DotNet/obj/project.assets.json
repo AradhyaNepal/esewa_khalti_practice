@@ -433,11 +433,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\PracticingDotNet\\EsewaKhaltiPractice\\DotNet\\EsewaKhaltiPractice\\EsewaKhaltiPractice.csproj",
-      "projectName": "EsewaKhaltiPractice",
-      "projectPath": "D:\\PracticingDotNet\\EsewaKhaltiPractice\\DotNet\\EsewaKhaltiPractice\\EsewaKhaltiPractice.csproj",
+      "projectUniqueName": "D:\\PracticingDotNet\\EsewaKhaltiPractice\\DotNet\\EsewaPractice\\EsewaPractice.csproj",
+      "projectName": "EsewaPractice",
+      "projectPath": "D:\\PracticingDotNet\\EsewaKhaltiPractice\\DotNet\\EsewaPractice\\EsewaPractice.csproj",
       "packagesPath": "C:\\Users\\Aaradhya Gopal\\.nuget\\packages\\",
-      "outputPath": "D:\\PracticingDotNet\\EsewaKhaltiPractice\\DotNet\\EsewaKhaltiPractice\\obj\\",
+      "outputPath": "D:\\PracticingDotNet\\EsewaKhaltiPractice\\DotNet\\EsewaPractice\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Aaradhya Gopal\\AppData\\Roaming\\NuGet\\NuGet.Config",

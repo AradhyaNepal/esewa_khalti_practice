@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace EsewaKhaltiPractice.Controllers
+namespace EsewaPractice.Controllers
 {
     [ApiController]
     [Route("[controller]")]

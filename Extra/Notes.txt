@@ -1,0 +1,28 @@
+1) Get Payment Details and Keys
+
+
+Request:
+{
+ productId:1,	
+}
+
+
+Response
+Esewa:
+clientId JB0BBQ4aD0UqIThFJwAKBgAXEUkEGQUBBAwdOgABHD4DChwUAB0R
+secretId BhwIWQQADhIYSxILExMcAgFXFhcOBwAKBgAXEQ==	
+productId <-- Unique ID to track specific transaction. We have to generate this ourself.
+productName Product 1
+productPrice 500
+
+Khalti
+test_public_key_d5d9f63743584dc38753056b0cc737d5
+amount: 50000,
+productIdentity: 'dell-g5-g5510-2021',
+productName: 'Dell G5 G5510 2021',
+productUrl: 'https://www.khalti.com/#/bazaar',
+
+
+
+openssl genrsa -out private.pem 4096
+openssl rsa -in private.pem -pubout -out public.pem
