@@ -1,4 +1,15 @@
+using EsewaPractice;
+using EsewaPractice.Model;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+
+
+
+builder.Services.AddDbContext<PaymentDbContext>(option => {
+    option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultSQLConnection"));
+});
+
 
 // Add services to the container.
 

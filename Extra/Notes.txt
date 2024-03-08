@@ -3,13 +3,13 @@
 Assumsion we are making is that every product belongs to diffrent merchat
 Request:
 {
- productId:1,	
+ productId:2,	
 }
 
 
 Response
 Esewa:
-clientId JB0BBQ4aD0UqIThFJwAKBgAXEUkEGQUBBAwdOgABHD4DChwUAB0R
+	 JB0BBQ4aD0UqIThFJwAKBgAXEUkEGQUBBAwdOgABHD4DChwUAB0R
 clientSecret BhwIWQQADhIYSxILExMcAgFXFhcOBwAKBgAXEQ==	
 productId <-- Unique ID to track specific transaction. We have to generate this ourself.
 productName Product 1
@@ -31,3 +31,7 @@ test_secret_key_f59e8b7d18b4499ca40f68195a846e9b
 
 openssl genrsa -out private.pem 4096
 openssl rsa -in private.pem -pubout -out public.pem
+
+
+Add-Migration InitialCreate
+Update-Database
