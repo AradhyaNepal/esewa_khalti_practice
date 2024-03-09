@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using EsewaPractice.DTO;
+using System.Security.Cryptography;
 using System.Text;
 
 
@@ -6,6 +7,18 @@ namespace EsewaPractice.Encryption
 {
     public class RSAEncryption
     {
+
+        public static string EncryptMobile(string data) {
+            // Generate RSA key pair
+            using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider())
+            {
+                rsa.ImportFromPem(KeysConfigurations.MobilePublicKey);
+                byte[] encryptedBytes = RSAEncryption.Encrypt(data, rsa);
+                return Convert.ToBase64String(encryptedBytes);
+             
+
+            }
+        }
         public static byte[] Encrypt(string plaintext, RSA rsa)
         {
             // Get the maximum length of data that can be encrypted with the RSA key

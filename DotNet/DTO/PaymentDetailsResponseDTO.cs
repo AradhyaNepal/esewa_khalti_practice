@@ -1,34 +1,64 @@
-﻿using EsewaPractice.Model;
+﻿using EsewaPractice.Encryption;
+using EsewaPractice.Model;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json;
 
 namespace EsewaPractice.DTO
 {
+    /// <summary>
+    /// I am putting all of the logic in this DTO layer, 
+    /// which might be bad practice to do in .Net, in Flutter its very bad practice.
+    /// 
+    /// But forgive me, i will refactor it later.
+    /// </summary>
     public class PaymentDetailsResponseDTO
     {
         [Required]
-        public KhaltiDetailsDTO Khalti { get; set; }
+        public required string KhaltiEncryptedUsingRSA { get; set; } = string.Empty;
 
         [Required]
-        public EsewaDetailsDTO Esewa { get; set; }
+        public required EsewaEncyptedHybridDTO EsewaEncryptedUsingHybrid { get; set; }
 
-        static public PaymentDetailsResponseDTO Map(ProductMerchantDetails details) {
-            return new () {
-                Khalti = new() { 
-                    PublicKey=details.KhaltiPublicKey,
-                    AmountPaisa=details.AmountRs*100,
-                    ProductName=details.Name,
-                    ProductUrl= "None",
+        static public PaymentDetailsResponseDTO MapAndEncrypt(ProductMerchantDetails details) {
+            //return new () {
+
+            //    EsewaEncrypted = new() {
+            //        ClientId=details.EsewaClientId,
+            //        ClientSecret=details.EsewaClientSecret,
+            //        AmountRs=details.AmountRs,
+            //        ProductName=details.Name,
+            //    }
+            //};
+
+            var khaltiDetails=JsonSerializer.Serialize(new KhaltiDetailsDTO
+            {
+                PublicKey = details.KhaltiPublicKey,
+                AmountPaisa = details.AmountRs * 100,
+                ProductName = details.Name,
+                ProductUrl = "None",
+            });
+
+
+            return new()
+            {
+                KhaltiEncryptedUsingRSA = RSAEncryption.EncryptMobile(khaltiDetails),
+                EsewaEncryptedUsingHybrid = new()
+                {
+                    EncryptedValue = "",
+                    EncryptionKey = "",
                 },
-                Esewa = new() {
-                    ClientId=details.EsewaClientId,
-                    ClientSecret=details.EsewaClientSecret,
-                    AmountRs=details.AmountRs,
-                    ProductName=details.Name,
-                }
             };
         }
 
 
+    }
+
+    public class EsewaEncyptedHybridDTO {
+        [Required]
+        public string EncryptedValue { get; set;} =string.Empty;
+
+        [Required]
+        public string EncryptionKey { get;set;} =string.Empty;
     }
 
     public class EsewaDetailsDTO {

@@ -20,7 +20,10 @@ namespace EsewaPractice.Controller
             if (data == null) {
                 return Conflict("Item Not Found");
             }
-            return Ok(PaymentDetailsResponseDTO.Map(data));
+
+            ///Todo: In future also do proper exception handling here,
+            ///once you refactor this DTO logic into separate layer.
+            return Ok(PaymentDetailsResponseDTO.MapAndEncrypt(data));
         }
 
    
