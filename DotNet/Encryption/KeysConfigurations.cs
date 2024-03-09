@@ -20,6 +20,16 @@ XZw4b5KFKpCYEWOvw+uc1B0CAwEAAQ==
     
 
 
+        /// <summary>
+        /// Generally we never puts Mobile Private Key in the backend, 
+        /// Its very insure thing to do
+        /// 
+        /// It makes no sense of using RSA for encyption
+        /// 
+        /// But since i don't know how to do unit testing in .Net, 
+        /// and feeling lazy to create seperate key for testing,
+        /// I am doing this wrong thing.
+        /// </summary>
     static public string MobilePrivatekey = @"-----BEGIN RSA PRIVATE KEY-----
 MIIJKQIBAAKCAgEA+IKD9z6mOrZp2qJ8k6QRj/nBrPWWXWQdI4sgEoLzP/yHf6MH
 al0epjveQNF5Ra4773bn7XqXGesO3UOPgMoF3HYMQQc1wTYNaqGmdn5mrRXvBpS0

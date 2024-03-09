@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EsewaPractice")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+675e5f8252f0dbc60b144cb1cbd353d8cff57b92")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b478b5358441b15560859703e5da132528737bfc")]
 [assembly: System.Reflection.AssemblyProductAttribute("EsewaPractice")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EsewaPractice")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
