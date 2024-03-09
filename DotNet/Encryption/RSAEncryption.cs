@@ -33,31 +33,34 @@ namespace EsewaPractice.Encryption
         }
 
 
-        public static string Decrypt(byte[] encryptedBytes, RSA rsa)
+        public static string Decrypt(byte[] encryptedBytes, string privateKey)
         {
             try
             {
-            
-
-                int maxLength = rsa.KeySize / 8;
-                byte[] decryptedBytes = new byte[0];
-
-                for (int i = 0; i < encryptedBytes.Length; i += maxLength)
+                using (RSA rsa = RSA.Create())
                 {
-                    int length = Math.Min(maxLength, encryptedBytes.Length - i);
-                    byte[] chunk = new byte[length];
-                    Array.Copy(encryptedBytes, i, chunk, 0, length);
+                    rsa.ImportFromPem(privateKey);
 
-                    byte[] decryptedChunk = rsa.Decrypt(chunk, RSAEncryptionPadding.Pkcs1);
-                    decryptedBytes = Combine(decryptedBytes, decryptedChunk);
+                    int maxLength = rsa.KeySize / 8;
+                    byte[] decryptedBytes = new byte[0];
+
+                    for (int i = 0; i < encryptedBytes.Length; i += maxLength)
+                    {
+                        int length = Math.Min(maxLength, encryptedBytes.Length - i);
+                        byte[] chunk = new byte[length];
+                        Array.Copy(encryptedBytes, i, chunk, 0, length);
+
+                        byte[] decryptedChunk = rsa.Decrypt(chunk, RSAEncryptionPadding.Pkcs1);
+                        decryptedBytes = Combine(decryptedBytes, decryptedChunk);
+                    }
+
+                    return Encoding.UTF8.GetString(decryptedBytes);
                 }
-
-                return Encoding.UTF8.GetString(decryptedBytes);
             }
             catch (CryptographicException ex)
             {
                 Console.WriteLine("CryptographicException while decrypting: " + ex.Message);
-                return "ErrorErrorError";
+                return "ErrorErrorError;
             }
         }
 
