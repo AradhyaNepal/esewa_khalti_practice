@@ -55,7 +55,7 @@ namespace EsewaPractice.Encryption
             catch (CryptographicException ex)
             {
                 Console.WriteLine("CryptographicException while decrypting: " + ex.Message);
-                return "ErrorErrorError";
+                throw new Exception();
             }
         }
 
@@ -86,7 +86,7 @@ namespace EsewaPractice.Encryption
             catch (CryptographicException ex)
             {
                 Console.WriteLine("CryptographicException while decrypting: " + ex.Message);
-                return [];
+                throw new Exception();
             }
         }
 
