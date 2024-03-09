@@ -50,6 +50,19 @@ namespace EsewaPractice.Encryption
         {
             try
             {
+                return Encoding.UTF8.GetString(DecryptByte(encryptedBytes, privateKey));
+            }
+            catch (CryptographicException ex)
+            {
+                Console.WriteLine("CryptographicException while decrypting: " + ex.Message);
+                return "ErrorErrorError";
+            }
+        }
+
+        public static byte[] DecryptByte(byte[] encryptedBytes, string privateKey)
+        {
+            try
+            {
                 using (RSA rsa = RSA.Create())
                 {
                     rsa.ImportFromPem(privateKey);
@@ -67,13 +80,13 @@ namespace EsewaPractice.Encryption
                         decryptedBytes = Combine(decryptedBytes, decryptedChunk);
                     }
 
-                    return Encoding.UTF8.GetString(decryptedBytes);
+                    return decryptedBytes;
                 }
             }
             catch (CryptographicException ex)
             {
                 Console.WriteLine("CryptographicException while decrypting: " + ex.Message);
-                return "ErrorErrorError";
+                return [];
             }
         }
 

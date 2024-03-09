@@ -57,12 +57,13 @@ namespace EsewaPractice.Controller
         }
 
         [HttpPost("testHybridEncryption")]
-        public IActionResult TestHybridEncryption([FromBody] HybridEncryptionTestRequestDTO request)
+        public IActionResult TestHybridEncryption([FromBody] HybridEncryptedResponse request)
         {
-            var encrptedValue = Convert.FromBase64String(request.EncryptedDecryptionData);
-            var decryptedValue = RSAEncryption.Decrypt(encrptedValue, KeysConfigurations.MobilePrivatekey);
-            var decryptedValueJson = JsonSerializer.Deserialize<KhaltiDetailsDTO>(decryptedValue);
-            return Ok(new RSAEncryptionTestResponseDTO() { KhaltiDetails = decryptedValueJson });
+            var encryptedDecryptionKey = Convert.FromBase64String(request.EncryptedDecryptionKey);
+            var decryptionKey = RSAEncryption.DecryptByte(encryptedDecryptionKey, KeysConfigurations.MobilePrivatekey);
+            var decryptedData = HybridEncryption.DecryptStringAES(request.EncryptedData,decryptionKey);
+            var decryptedValueJson = JsonSerializer.Deserialize<EsewaDetailsDTO>(decryptedData);
+            return Ok(decryptedValueJson);
 
         }
     }

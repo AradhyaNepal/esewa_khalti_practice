@@ -25,11 +25,11 @@ namespace EsewaPractice.Encryption
         {
             using (Aes aesAlg = Aes.Create())
             {
+                aesAlg.KeySize = 256;
                 aesAlg.GenerateKey();
                 return aesAlg.Key;
             }
         }
-
 
         // Encrypt a string using AES
         static string EncryptStringAES(string plainText, byte[] key)
@@ -58,6 +58,33 @@ namespace EsewaPractice.Encryption
                 }
             }
             return Convert.ToBase64String(encrypted);
+        }
+
+        static public string DecryptStringAES(string cipherText, byte[] key)
+        {
+            byte[] cipherBytes = Convert.FromBase64String(cipherText);
+
+            using (Aes aesAlg = Aes.Create())
+            {
+                aesAlg.Key = key;
+                aesAlg.Mode = CipherMode.CBC;
+                aesAlg.Padding = PaddingMode.PKCS7;
+
+                // Create decryptor without IV
+                ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, null);
+
+                // Decrypt the data
+                using (MemoryStream msDecrypt = new MemoryStream(cipherBytes))
+                {
+                    using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
+                    {
+                        using (StreamReader srDecrypt = new StreamReader(csDecrypt))
+                        {
+                            return srDecrypt.ReadToEnd();
+                        }
+                    }
+                }
+            }
         }
     }
 }

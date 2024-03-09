@@ -15,6 +15,7 @@ In response server sends back both EncryptedLargeDataUsingSymmetricKey and Encry
 Client
 ------
 Using Client Private Key EncryptedSymmetricKey get decrypted, now client got the SymmetricKey.
+
 Using the SymmetricKey, EncryptedLargeDataUsingSymmetricKey gets decrypted.
 And the client gets the LargeData
 
