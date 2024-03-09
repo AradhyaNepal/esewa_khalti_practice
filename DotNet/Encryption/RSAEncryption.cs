@@ -35,26 +35,30 @@ namespace EsewaPractice.Encryption
 
         public static string Decrypt(byte[] encryptedBytes, RSA rsa)
         {
-            // Get the maximum length of data that can be decrypted with the RSA key
-            int maxLength = rsa.KeySize / 8;
-
-            // Create a buffer to hold the decrypted chunks
-            byte[] decryptedBytes = new byte[0];
-
-            // Decrypt each chunk separately
-            for (int i = 0; i < encryptedBytes.Length; i += maxLength)
+            try
             {
-                int length = Math.Min(maxLength, encryptedBytes.Length - i);
-                byte[] chunk = new byte[length];
-                Array.Copy(encryptedBytes, i, chunk, 0, length);
+            
 
-                // Decrypt the chunk and append it to the decrypted bytes buffer
-                byte[] decryptedChunk = rsa.Decrypt(chunk, RSAEncryptionPadding.Pkcs1);
-                decryptedBytes = Combine(decryptedBytes, decryptedChunk);
+                int maxLength = rsa.KeySize / 8;
+                byte[] decryptedBytes = new byte[0];
+
+                for (int i = 0; i < encryptedBytes.Length; i += maxLength)
+                {
+                    int length = Math.Min(maxLength, encryptedBytes.Length - i);
+                    byte[] chunk = new byte[length];
+                    Array.Copy(encryptedBytes, i, chunk, 0, length);
+
+                    byte[] decryptedChunk = rsa.Decrypt(chunk, RSAEncryptionPadding.Pkcs1);
+                    decryptedBytes = Combine(decryptedBytes, decryptedChunk);
+                }
+
+                return Encoding.UTF8.GetString(decryptedBytes);
             }
-
-            // Convert the decrypted bytes to a string
-            return Encoding.UTF8.GetString(decryptedBytes);
+            catch (CryptographicException ex)
+            {
+                Console.WriteLine("CryptographicException while decrypting: " + ex.Message);
+                return "ErrorErrorError";
+            }
         }
 
         private static byte[] Combine(byte[] a, byte[] b)

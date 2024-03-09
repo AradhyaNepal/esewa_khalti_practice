@@ -19,7 +19,8 @@ namespace EsewaPractice.Controller
         public IActionResult TestEncryption()
         {
 
-          
+  
+
             // Generate RSA key pair
             using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider())
             {
@@ -36,7 +37,7 @@ namespace EsewaPractice.Controller
                 return Ok(new TestEncryptionResponse()
                 {
                     Original = plaintext,
-                    Encrypted = encryptedBytes.ToString() ?? "",
+                    Encrypted = Convert.ToBase64String(encryptedBytes),
                     Decrypted = decryptedText,
                 });
                 // Display results
