@@ -1,5 +1,4 @@
 ﻿using EsewaPractice.DTO;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Data.Entity;
 
@@ -23,6 +22,8 @@ namespace EsewaPractice.Controller
             }
             return Ok(PaymentDetailsResponseDTO.Map(data));
         }
+
+   
 
     }
 }

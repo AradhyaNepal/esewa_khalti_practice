@@ -1,0 +1,21 @@
+
+1) Esewa
+Large data
+
+I generate symm key
+using that key i encrypt large data
+i encrypt that symm key using public key
+i send both large data encrypted and the symm key encrypted
+we decrypt symm key encrypted, and using that decrypted key we decrypt the large data encrypted.
+
+
+2) Khalti
+
+Large data
+
+I will do chuking and padding <- I know nothing about it
+And encrypt <- It could be inefficent i don't know
+combine
+sends in response
+
+
