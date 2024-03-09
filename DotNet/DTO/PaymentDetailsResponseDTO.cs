@@ -17,17 +17,12 @@ namespace EsewaPractice.DTO
         public required string KhaltiEncryptedUsingRSA { get; set; } = string.Empty;
 
         [Required]
-        public required EsewaEncyptedHybridDTO EsewaEncryptedUsingHybrid { get; set; }
+        public required HybridEncryptedResponse EsewaEncryptedUsingHybrid { get; set; }
 
         static public PaymentDetailsResponseDTO MapAndEncrypt(ProductMerchantDetails details) {
             //return new () {
 
-            //    EsewaEncrypted = new() {
-            //        ClientId=details.EsewaClientId,
-            //        ClientSecret=details.EsewaClientSecret,
-            //        AmountRs=details.AmountRs,
-            //        ProductName=details.Name,
-            //    }
+
             //};
 
             var khaltiDetails=JsonSerializer.Serialize(new KhaltiDetailsDTO
@@ -38,17 +33,33 @@ namespace EsewaPractice.DTO
                 ProductUrl = "None",
             });
 
+            var esewaDetails = JsonSerializer.Serialize(new EsewaDetailsDTO()
+                {
+                    ClientId = details.EsewaClientId,
+                    ClientSecret = details.EsewaClientSecret,
+                    AmountRs = details.AmountRs,
+                    ProductName = details.Name,
+                }
+            );
+
+            var esewaEncrypted = HybridEncryption.HybridEncryptMobile(esewaDetails);
 
             return new()
             {
                 KhaltiEncryptedUsingRSA = RSAEncryption.EncryptMobile(khaltiDetails),
-                EsewaEncryptedUsingHybrid = new()
-                {
-                    EncryptedValue = "",
-                    EncryptionKey = "",
-                },
+                EsewaEncryptedUsingHybrid = esewaEncrypted,
             };
         }
+
+
+    }
+
+    public class HybridEncryptedResponse
+    {
+        [Required]
+        public required string EncryptedData { get; set; } = string.Empty;
+        [Required]
+        public required string EncryptedDecryptionKey { get; set; } = string.Empty;
 
 
     }

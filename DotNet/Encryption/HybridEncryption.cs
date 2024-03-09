@@ -1,20 +1,16 @@
-﻿using System.CodeDom;
+﻿using EsewaPractice.DTO;
+using System.CodeDom;
 using System.Security.Cryptography;
 
 ///THis entire encrypting need to refactor, lots of coupling happening here and code is not testable.
 ///This codes really needs unit tests.
 namespace EsewaPractice.Encryption
 {
-    public class HybridEncryptedResponse {
-        public required string EncryptedData=string.Empty;
-        public required string EncryptedDecryptionKey=string.Empty;
-
-
-    }
+ 
     public class HybridEncryption
     {
 
-        static HybridEncryptedResponse HybridEncryptMobile(String data) {
+        static public HybridEncryptedResponse HybridEncryptMobile(String data) {
             var symmetricKey = GenerateAESKey();
             var encryptedData = EncryptStringAES(data, symmetricKey);
             var encryptedDecryptionKey = RSAEncryption.EncryptMobile(Convert.ToBase64String(symmetricKey));
