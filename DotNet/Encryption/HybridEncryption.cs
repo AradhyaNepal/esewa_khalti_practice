@@ -12,13 +12,21 @@ namespace EsewaPractice.Encryption
     {
 
         static public HybridEncryptedResponse HybridEncryptMobile(String data) {
-            var symmetricKey = GenerateAESKey();
-            var encryptedData = EncryptString(symmetricKey, data);
-            var encryptedDecryptionKey = RSAEncryption.EncryptMobile(Convert.ToBase64String(symmetricKey));
-            return new(){
-                EncryptedData=encryptedData,
-                EncryptedDecryptionKey=encryptedDecryptionKey,
-            };
+            using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider())
+            {
+                rsa.ImportFromPem(KeysConfigurations.MobilePublicKey);
+                var symmetricKey = GenerateAESKey();
+                var encryptedData = EncryptString(symmetricKey, data);
+                var encryptedDecryptionKey = RSAEncryption.EncryptBytes(symmetricKey,rsa);
+                return new()
+                {
+                    EncryptedData = encryptedData,
+                    EncryptedDecryptionKey = Convert.ToBase64String(encryptedDecryptionKey),
+                };
+
+
+            }
+         
         }
 
         // Generate a random AES key
