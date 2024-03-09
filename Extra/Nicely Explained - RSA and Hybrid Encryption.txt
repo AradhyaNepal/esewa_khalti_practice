@@ -1,0 +1,7 @@
+Esewa and Khalti (If you are only for RSA and Hybrid, you don't need to learn this. These two SDK is just used for example)
+
+1) Get SDK keys and product details
+
+2) Get transactionId
+
+3) Verify transaction
