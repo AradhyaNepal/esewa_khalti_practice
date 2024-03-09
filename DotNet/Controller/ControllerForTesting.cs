@@ -99,28 +99,41 @@ namespace EsewaPractice.Controller
         [HttpPost("testHybridEncryptionDecryption")]
         public IActionResult TestHybridEncryptionDecryption()
         {
-            //Server
-            var data = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiuectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiussmod tempor incididunt ut labore et dolore magna aliqua.";
-            var key = HybridEncryption.GenerateAESKey();
-            var keyBaseUTF8 = Encoding.UTF8.GetString(key);
-            var encryptedResponse = HybridEncryption.EncryptString(key,data);
-            var encryptedKeyBase64 = RSAEncryption.EncryptMobile(keyBaseUTF8);
-
-            //Client
-            var responseKeyBase64Decoded =Convert.FromBase64String(encryptedKeyBase64);
-            var decryptedKey = RSAEncryption.DecryptByte(responseKeyBase64Decoded, KeysConfigurations.MobilePrivatekey);
-            var decryptedResponse = HybridEncryption.DecryptString(decryptedKey,encryptedResponse);
-            return Ok(new HybridEncryptionDecryptionTestResponseDTO()
+            using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider())
             {
-                OriginalData = data,
-                EncryptedData = encryptedResponse,
-                DecryptedData = decryptedResponse,
-                OriginalKey= keyBaseUTF8,
-                EncryptedKey= encryptedKeyBase64,
-                DecryptedKey= Convert.ToBase64String(decryptedKey),
+                rsa.ImportFromPem(KeysConfigurations.MobilePublicKey);
+                //Server
+                var data = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiuectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiussmod tempor incididunt ut labore et dolore magna aliqua.";
+                var key = HybridEncryption.GenerateAESKey();
+                var encryptedResponse = HybridEncryption.EncryptString(key, data);
+                var encryptedValue = RSAEncryption.EncryptBytes(key,rsa);
+                var encryptedKeyBase64 = Convert.ToBase64String(encryptedValue);
+
+                //Client
+                var responseKeyBase64Decoded = Convert.FromBase64String(encryptedKeyBase64);
+                var decryptedKey = RSAEncryption.DecryptByte(responseKeyBase64Decoded, KeysConfigurations.MobilePrivatekey);
+                var decryptedResponse = HybridEncryption.DecryptString(decryptedKey, encryptedResponse);
 
 
-            });
+                var originalKeyBase64 = Convert.ToBase64String(key);
+                var decryptedKeyBase64 = Convert.ToBase64String(decryptedKey);
+                return Ok(new HybridEncryptionDecryptionTestResponseDTO()
+                {
+                    OriginalData = data,
+                    EncryptedData = encryptedResponse,
+                    DecryptedData = decryptedResponse,
+                    DataSame = data == decryptedResponse,
+                    OriginalKey = originalKeyBase64,
+                    EncryptedKey = encryptedKeyBase64,
+                    DecryptedKey = decryptedKeyBase64,  
+                    KeySame= originalKeyBase64 == decryptedKeyBase64
+
+
+                });
+
+
+            }
+            
         }
 
         [HttpPost("testActualKhaltiEncryption")]

@@ -21,11 +21,19 @@ namespace EsewaPractice.Encryption
         }
         public static byte[] Encrypt(string plaintext, RSA rsa)
         {
-            // Get the maximum length of data that can be encrypted with the RSA key
-            int maxLength = rsa.KeySize / 8 - 11;
+          
 
             // Convert the plaintext string to bytes
             byte[] plaintextBytes = Encoding.UTF8.GetBytes(plaintext);
+            return EncryptBytes(plaintextBytes,rsa);
+
+
+
+        }
+
+        public static byte[] EncryptBytes(byte[] plaintextBytes, RSA rsa) {
+            // Get the maximum length of data that can be encrypted with the RSA key
+            int maxLength = rsa.KeySize / 8 - 11;
 
             // Create a buffer to hold the encrypted chunks
             byte[] encryptedBytes = new byte[0];
