@@ -1,12 +1,25 @@
 
 1) Esewa
-Large data
 
-I generate symm key
-using that key i encrypt large data
-i encrypt that symm key using public key
-i send both large data encrypted and the symm key encrypted
-we decrypt symm key encrypted, and using that decrypted key we decrypt the large data encrypted.
+Large data Encryption using Hybrid Stretegy
+-------------------------------------------
+
+Server
+------
+Code generates Random Symmetric key.
+Using that Symmetric key, code encrypt large data.
+That Symmetric key gets encrypted using Client Public Key.
+In response server sends back both EncryptedLargeDataUsingSymmetricKey and EncryptedSymmetricKey
+
+
+Client
+------
+Using Client Private Key EncryptedSymmetricKey get decrypted, now client got the SymmetricKey.
+Using the SymmetricKey, EncryptedLargeDataUsingSymmetricKey gets decrypted.
+And the client gets the LargeData
+
+
+
 
 
 2) Khalti
