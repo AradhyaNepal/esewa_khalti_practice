@@ -5,3 +5,110 @@ Esewa and Khalti (If you are only for RSA and Hybrid, you don't need to learn th
 2) Get transactionId
 
 3) Verify transaction
+
+
+AES
+These is one secret key
+say: key=12345
+
+Sender
+Receiver
+Both have that  key
+
+data ="Hello"
+
+//Sender
+data.encrypt(key)
+//Sender can decrypt the data, or if sender mistakely exposes the key, the data gets leaked
+Sends It
+
+//Receiver
+Receives it
+data.decrypt(key)
+
+
+------------------------
+Sender
+Public Key of Receiver (Sended by Receiver)
+
+
+
+Receiver
+Private Key of Receiver
+
+
+Data=Hello
+Public=public...
+Private=private...
+
+//Sender
+Data.encrypt(public)
+Sends it to the Receiver
+//Even if public key get leaked, no one decrypt it because only receiver have the private key
+
+//Receiver
+Receives the encrypted data
+encryptedData.decrypt(private)
+
+
+Large data have error in RSA
+What i found in flutter, chunking
+
+
+
+----------------------------------
+Hybrid Encryption Decryption for Large Data
+-------------------------------------------
+Sender
+(Public Key of Receiver)
+
+1) Sender creates a random AES key
+2) Sender encrypt the "Large Data" and creates "Encrypted Large Data". This encryption is done using AES Key.
+3) The AES Key Get Encrypted by the public key, now we got "EncryptedAES-DecryptionKey".
+4) In response, Receiver sends the "Encrypted Large Data" and "EncryptedAES-DecryptionKey" to the Receiver.
+5) Its also good to send meta data. as per chat gpt
+
+
+Receiver
+(Private Key of Receiver)
+1) Receiver receives "Encrypted Large Data" and "EncryptedAES-DecryptionKey" from the Sender
+2) Using its Private Key , it decrypt the "EncryptedAES-DecryptionKey", and gets the generated AES key.
+3) Using that AES key, the "Encrypted Large Data" gets decrypted.
+4) We got the Decrypted "Large Data"
+
+
+----------------------------------
+
+
+In my response there were two data:
+1) Data of Esewa -> Hybrid Encryption
+2) Data of Khalti -> Rsa Encryption
+
+
+
+-----------------
+Without IV
+
+Hacker got 12345 is ABCDE
+
+A user password is 12345,
+Hacker hacked the API and Found the encrypted data ABCDE
+
+Now since 12345 which hacker found denotes ABCDE,
+and the user password encypted is also ABCDE,
+so the user passord is 12345
+Hence HACKED!!
+----------------------------------
+Without IV
+
+Hacker got 12345 is ABCDE
+
+A user password is 12345 -> EFGHI or FJDKLF or KDJFDF or KFDKLSJF, It would be different not same every time it would be encrypted.
+Hacker hacked the API and Found the encrypted data KDJFDF
+
+Now since 12345 which hacker found denotes ABCDE,
+and the user password encypted is acually encypted as KDJFDF,
+
+So hacker cannot know that its 12345
+
+----------------------------------

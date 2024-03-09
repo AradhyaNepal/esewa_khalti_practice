@@ -105,14 +105,16 @@ namespace EsewaPractice.Controller
                 //Server
                 var data = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiuectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiusectetur adipiscing elit. Sed do eiussmod tempor incididunt ut labore et dolore magna aliqua.";
                 var key = HybridEncryption.GenerateAESKey();
-                var encryptedResponse = HybridEncryption.EncryptString(key, data);
-                var encryptedValue = RSAEncryption.EncryptBytes(key,rsa);
-                var encryptedKeyBase64 = Convert.ToBase64String(encryptedValue);
+                var encryptedResponse = HybridEncryption.EncryptString(key, data);//Large data encrypted . Data 2 we send in response
+                var encryptedValue = RSAEncryption.EncryptBytes(key,rsa);//AES Encrypted Key - For decrypting the large data
+                var encryptedKeyBase64 = Convert.ToBase64String(encryptedValue);//Data 1 We send in response
 
                 //Client
                 var responseKeyBase64Decoded = Convert.FromBase64String(encryptedKeyBase64);
-                var decryptedKey = RSAEncryption.DecryptByte(responseKeyBase64Decoded, KeysConfigurations.MobilePrivatekey);
-                var decryptedResponse = HybridEncryption.DecryptString(decryptedKey, encryptedResponse);
+
+                //Decrypt the AES key
+                var decryptedKey = RSAEncryption.DecryptByte(responseKeyBase64Decoded, KeysConfigurations.MobilePrivatekey); 
+                var decryptedResponse = HybridEncryption.DecryptString(decryptedKey, encryptedResponse);//AES decrytion of large encrypted data
 
 
                 var originalKeyBase64 = Convert.ToBase64String(key);
@@ -140,6 +142,7 @@ namespace EsewaPractice.Controller
         public IActionResult TestActualKhaltiEncryption([FromBody] RSAEncryptionTestRequestDTO request)
         {
             var encrptedValue = Convert.FromBase64String(request.EncryptedDetails);
+           
             var decryptedValue = RSAEncryption.Decrypt(encrptedValue, KeysConfigurations.MobilePrivatekey);
             var decryptedValueJson = JsonSerializer.Deserialize<KhaltiDetailsDTO>(decryptedValue);
             return Ok(new RSAEncryptionTestResponseDTO() { KhaltiDetails = decryptedValueJson });
@@ -150,9 +153,8 @@ namespace EsewaPractice.Controller
         public IActionResult TestActualEsewaEncryption([FromBody] HybridEncryptedResponse request)
         {
             var encryptedDecryptionKey = Convert.FromBase64String(request.EncryptedDecryptionKey);
-            var decryptionKey = RSAEncryption.DecryptByte(encryptedDecryptionKey, KeysConfigurations.MobilePrivatekey);
-            Console.WriteLine(ToReadableByteArray(decryptionKey));
-            var decryptedData = HybridEncryption.DecryptString(decryptionKey,request.EncryptedData);
+            var decryptionKey = RSAEncryption.DecryptByte(encryptedDecryptionKey, KeysConfigurations.MobilePrivatekey);//RSA for short data
+            var decryptedData = HybridEncryption.DecryptString(decryptionKey,request.EncryptedData);//AES decryption for large data
             var decryptedValueJson = JsonSerializer.Deserialize<EsewaDetailsDTO>(decryptedData);
             return Ok(decryptedValueJson);
 

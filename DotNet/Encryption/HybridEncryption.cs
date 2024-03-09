@@ -11,7 +11,7 @@ namespace EsewaPractice.Encryption
     public class HybridEncryption
     {
 
-        static public HybridEncryptedResponse HybridEncryptMobile(String data) {
+        static public HybridEncryptedResponse HybridEncryptMobile(string data) {
             using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider())
             {
                 rsa.ImportFromPem(KeysConfigurations.MobilePublicKey);

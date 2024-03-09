@@ -31,6 +31,8 @@ namespace EsewaPractice.Encryption
 
         }
 
+        ///This rsa key is public key
+       ///Chunking was used if there is large data, it is bad stragety than hybrid, but for demostration it was done.
         public static byte[] EncryptBytes(byte[] plaintextBytes, RSA rsa) {
             // Get the maximum length of data that can be encrypted with the RSA key
             int maxLength = rsa.KeySize / 8 - 11;
@@ -54,6 +56,8 @@ namespace EsewaPractice.Encryption
         }
 
 
+
+        ///This rsa key is private key
         public static string Decrypt(byte[] encryptedBytes, string privateKey)
         {
             try
