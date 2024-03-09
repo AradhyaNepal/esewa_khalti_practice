@@ -1,6 +1,7 @@
 ﻿using EsewaPractice.DTO;
 using System.CodeDom;
 using System.Security.Cryptography;
+using System.Text;
 
 ///THis entire encrypting need to refactor, lots of coupling happening here and code is not testable.
 ///This codes really needs unit tests.
@@ -12,7 +13,7 @@ namespace EsewaPractice.Encryption
 
         static public HybridEncryptedResponse HybridEncryptMobile(String data) {
             var symmetricKey = GenerateAESKey();
-            var encryptedData = EncryptStringAES(data, symmetricKey);
+            var encryptedData = EncryptString(symmetricKey, data);
             var encryptedDecryptionKey = RSAEncryption.EncryptMobile(Convert.ToBase64String(symmetricKey));
             return new(){
                 EncryptedData=encryptedData,
@@ -21,7 +22,7 @@ namespace EsewaPractice.Encryption
         }
 
         // Generate a random AES key
-        static byte[] GenerateAESKey()
+        static public byte[] GenerateAESKey()
         {
             using (Aes aesAlg = Aes.Create())
             {
@@ -32,59 +33,59 @@ namespace EsewaPractice.Encryption
         }
 
         // Encrypt a string using AES
-        static string EncryptStringAES(string plainText, byte[] key)
+        public static string EncryptString(byte[] key, string plainText)
         {
-            byte[] encrypted;
-            using (Aes aesAlg = Aes.Create())
+            byte[] iv = new byte[16];
+            byte[] array;
+
+            using (Aes aes = Aes.Create())
             {
-                aesAlg.Key = key;
-                aesAlg.Mode = CipherMode.CBC; // Cipher Block Chaining
-                aesAlg.Padding = PaddingMode.PKCS7; // Padding for incomplete blocks
+                aes.Key = key;
+                aes.IV = iv;
 
-                // Create encryptor
-                ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
+                ICryptoTransform encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
 
-                // Encrypt the data
-                using (var msEncrypt = new MemoryStream())
+                using (MemoryStream memoryStream = new MemoryStream())
                 {
-                    using (var csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
+                    using (CryptoStream cryptoStream = new CryptoStream((Stream)memoryStream, encryptor, CryptoStreamMode.Write))
                     {
-                        using (var swEncrypt = new StreamWriter(csEncrypt))
+                        using (StreamWriter streamWriter = new StreamWriter((Stream)cryptoStream))
                         {
-                            swEncrypt.Write(plainText);
+                            streamWriter.Write(plainText);
                         }
+
+                        array = memoryStream.ToArray();
                     }
-                    encrypted = msEncrypt.ToArray();
                 }
             }
-            return Convert.ToBase64String(encrypted);
+
+            return Convert.ToBase64String(array);
         }
 
-        static public string DecryptStringAES(string cipherText, byte[] key)
+
+        public static string DecryptString(byte[] key, string cipherText)
         {
-            byte[] cipherBytes = Convert.FromBase64String(cipherText);
+            byte[] iv = new byte[16];
+            byte[] buffer = Convert.FromBase64String(cipherText);
 
-            using (Aes aesAlg = Aes.Create())
+            using (Aes aes = Aes.Create())
             {
-                aesAlg.Key = key;
-                aesAlg.Mode = CipherMode.CBC;
-                aesAlg.Padding = PaddingMode.PKCS7;
+                aes.Key = key;
+                aes.IV = iv;
+                ICryptoTransform decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
 
-                // Create decryptor without IV
-                ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, null);
-
-                // Decrypt the data
-                using (MemoryStream msDecrypt = new MemoryStream(cipherBytes))
+                using (MemoryStream memoryStream = new MemoryStream(buffer))
                 {
-                    using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
+                    using (CryptoStream cryptoStream = new CryptoStream((Stream)memoryStream, decryptor, CryptoStreamMode.Read))
                     {
-                        using (StreamReader srDecrypt = new StreamReader(csDecrypt))
+                        using (StreamReader streamReader = new StreamReader((Stream)cryptoStream))
                         {
-                            return srDecrypt.ReadToEnd();
+                            return streamReader.ReadToEnd();
                         }
                     }
                 }
             }
         }
     }
+
 }
