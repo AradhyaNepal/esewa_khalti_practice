@@ -18,3 +18,4 @@ class PaymentNotifier extends StateNotifier<GenericState<String>> {
     }
   }
 }
+

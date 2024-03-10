@@ -1,0 +1,19 @@
+name: rsa_encryption
+description: RSA Encryption for this project. Do not copy key to another project
+version: 1.0.0
+
+
+environment:
+  sdk: '>=3.2.3 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  encrypt: ^5.0.3
+  pointycastle: ^3.7.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+
