@@ -29,7 +29,7 @@ namespace EsewaPractice.Controller
             return Ok(PaymentDetailsResponseDTO.MapAndEncrypt(data));
         }
 
-        [HttpGet("initiateTransaction")]
+        [HttpPost("initiateTransaction")]
         public IActionResult InitiateTransaction([FromBody] PaymentInitiateRequestDTO request)
         {
             var data = _db.ProductMerchantDetails.AsNoTracking().FirstOrDefault(e => e.Id.ToString() == request.ProductId);

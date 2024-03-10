@@ -5,14 +5,14 @@ namespace EsewaPractice.Model
 {
     public enum StatusType
     {
-        Initiated,
-        Completed,
+        Initiated=0,
+        Completed=1,
     }
 
     public enum PaymentType
     {
-        Esewa,
-        Khalti,
+        Esewa=0,
+        Khalti=1,
     }
     public class TransactionStatus
     {

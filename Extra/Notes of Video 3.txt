@@ -1,0 +1,8 @@
+Now lets move to Mobile part
+
+1) Splash -> Load the details of payment API
+2) Payment options
+3) On selected -> Initiate Payment API
+4) On completed -> Verify API
+
+5) On Error or Cancelled also we might need to update the status
