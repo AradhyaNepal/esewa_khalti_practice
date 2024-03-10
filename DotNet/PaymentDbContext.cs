@@ -13,5 +13,17 @@ namespace EsewaPractice
         }
 
         public DbSet<ProductMerchantDetails> ProductMerchantDetails { get; set; }
+
+        public DbSet<TransactionStatus> TransactionStatus { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<TransactionStatus>()
+                .HasOne(b => b.ProductMerchantDetails)
+                .WithMany(a => a.TransactionStatuses)
+                .HasForeignKey(b => b.ProductId);
+        }
+ 
     }
 }

@@ -1,4 +1,4 @@
-﻿using EsewaPractice.DTO;
+﻿using EsewaPractice.Model.DTO;
 using EsewaPractice.Encryption;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Cryptography;

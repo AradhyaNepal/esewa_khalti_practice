@@ -13,6 +13,8 @@ namespace EsewaPractice.Model
         [Required]
         public required string Name { get; set; }
 
+        public ICollection<TransactionStatus> TransactionStatuses { get; set; }
+
         [Required]
         public required int AmountRs { get; set; }
 

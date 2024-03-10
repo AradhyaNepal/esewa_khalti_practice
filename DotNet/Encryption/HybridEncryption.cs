@@ -1,4 +1,4 @@
-﻿using EsewaPractice.DTO;
+﻿using EsewaPractice.Model.DTO;
 using System.CodeDom;
 using System.Security.Cryptography;
 using System.Text;
@@ -7,7 +7,7 @@ using System.Text;
 ///This codes really needs unit tests.
 namespace EsewaPractice.Encryption
 {
- 
+
     public class HybridEncryption
     {
 
