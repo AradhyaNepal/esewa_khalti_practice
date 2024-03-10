@@ -3,7 +3,7 @@ import 'package:esewa_khalti/features/payment/controller/payment_repo_controller
 import 'package:esewa_khalti/main.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:generic_state_bya2/generic.dart';
-
+final paymentProvider=StateNotifierProvider<PaymentNotifier,GenericState<String>>((ref) => PaymentNotifier(InitialState()));
 class PaymentNotifier extends StateNotifier<GenericState<String>> {
   PaymentNotifier(super.state);
 
