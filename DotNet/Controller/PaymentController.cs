@@ -3,6 +3,7 @@ using EsewaPractice.Model;
 using EsewaPractice.Model.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Drawing;
 using System.Transactions;
 
 namespace EsewaPractice.Controller
@@ -29,9 +30,15 @@ namespace EsewaPractice.Controller
             return Ok(PaymentDetailsResponseDTO.MapAndEncrypt(data));
         }
 
+
+        //Document in API that 0 is for Esewa and 1 for Khalti
         [HttpPost("initiateTransaction")]
         public IActionResult InitiateTransaction([FromBody] PaymentInitiateRequestDTO request)
         {
+            if (!Enum.IsDefined(typeof(PaymentType), request.PaymentType))
+            {
+                return Conflict("Options you got are only 0 for Esewa and 1 for Khalti");
+            }
             var data = _db.ProductMerchantDetails.AsNoTracking().FirstOrDefault(e => e.Id.ToString() == request.ProductId);
             if (data == null)
             {
